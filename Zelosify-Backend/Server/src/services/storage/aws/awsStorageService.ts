@@ -36,8 +36,6 @@ export class AwsStorageService extends StorageService {
         accessKeyId,
         secretAccessKey,
       },
-      endpoint: `https://s3.${region}.amazonaws.com`,
-      forcePathStyle: true,
     });
 
     this.bucket = bucketName;
@@ -46,7 +44,6 @@ export class AwsStorageService extends StorageService {
     console.log("[AWS S3] Initialized with:", {
       region,
       bucket: bucketName,
-      endpoint: `https://s3.${region}.amazonaws.com`,
       hasCredentials: !!accessKeyId && !!secretAccessKey,
     });
   }
@@ -59,7 +56,6 @@ export class AwsStorageService extends StorageService {
       });
       return await getSignedUrl(this.s3Client, command, {
         expiresIn: 3600,
-        signableHeaders: new Set(["host"]),
       });
     } catch (error) {
       console.error("[AWS S3] Error generating get URL:", error);
@@ -149,7 +145,6 @@ export class AwsStorageService extends StorageService {
 
       const url = await getSignedUrl(this.s3Client, command, {
         expiresIn: 3600,
-        signableHeaders: new Set(["host"]),
       });
 
       console.log("[AWS S3] Generated upload URL successfully");

@@ -1,5 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async rewrites() {
+    return [
+      {
+        source: "/api/v1/:path*",
+        destination: "http://localhost:5000/api/v1/:path*",
+      },
+    ];
+  },
   // Optimize chunk loading and improve stability
   reactStrictMode: true,
   poweredByHeader: false,

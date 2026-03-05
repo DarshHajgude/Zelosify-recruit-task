@@ -2,7 +2,7 @@ name: zelosify-recruit-backend
 
 services:
   postgres:
-    image: postgres:latest
+    image: postgres:16
     container_name: recruit-postgres
     restart: unless-stopped
     environment:
@@ -11,6 +11,7 @@ services:
       POSTGRES_DB: zelosify_recruit_test
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./docker/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
     ports:
       - "5445:5432" # Expose internal 5432 on host port 5445 (Port 5445 can be used to connect psql outside the container)
     networks:
@@ -31,7 +32,7 @@ services:
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=admin
       - KC_DB=postgres
-      - KC_DB_URL=jdbc:postgresql://postgres:5432/zelosify_recruit_test
+      - KC_DB_URL=jdbc:postgresql://postgres:5432/keycloak_db
       - KC_DB_USERNAME=postgres
       - KC_DB_PASSWORD=testrun
       - KC_DB_SCHEMA=public

@@ -68,6 +68,6 @@ router.post("/verify-totp", wrapHandler(verifyTOTP));
  * POST /logout - Logout authenticated user
  * Requires authentication middleware to access user session
  */
-router.post("/logout", authenticateUser, wrapProtectedHandler(logout));
+router.post("/logout", wrapHandler(logout as any));
 
 export default router;

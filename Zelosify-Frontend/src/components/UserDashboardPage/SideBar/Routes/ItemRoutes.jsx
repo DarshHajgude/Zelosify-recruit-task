@@ -6,12 +6,20 @@ import {
   Smile,
   Scale3DIcon,
   Frown,
+  Briefcase,
+  ClipboardList,
 } from "lucide-react";
 import { MdDataUsage } from "react-icons/md";
 
 // Role-based menu items
 const getOverviewItemsByRole = (role) => {
   switch (role) {
+    // For HIRING_MANAGER role
+    case "HIRING_MANAGER":
+      return [
+        { title: "My Openings", href: "/hiring-manager/openings", icon: ClipboardList },
+      ];
+
     // For VENDOR_MANAGER role
     case "VENDOR_MANAGER":
       return [
@@ -42,6 +50,7 @@ const getOverviewItemsByRole = (role) => {
     // For IT_VENDOR
     case "IT_VENDOR":
       return [
+        { title: "Openings", href: "/vendor/openings", icon: Briefcase },
         { title: "Payments", href: "/vendor/payments", icon: CreditCard },
       ];
 

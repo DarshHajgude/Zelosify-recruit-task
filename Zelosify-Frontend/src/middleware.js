@@ -74,8 +74,12 @@ export function middleware(request) {
         );
 
       case "IT_VENDOR":
-        console.log(`Redirecting IT_VENDOR to /vendor/payments`);
-        return NextResponse.redirect(new URL("/vendor/payments", request.url));
+        console.log(`Redirecting IT_VENDOR to /vendor/openings`);
+        return NextResponse.redirect(new URL("/vendor/openings", request.url));
+
+      case "HIRING_MANAGER":
+        console.log(`Redirecting HIRING_MANAGER to /hiring-manager/openings`);
+        return NextResponse.redirect(new URL("/hiring-manager/openings", request.url));
 
       default:
         // Fallback for unknown roles or missing role - redirect to base user page
@@ -89,6 +93,22 @@ export function middleware(request) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
+  // Role-path enforcement — prevent cross-role route access
+  if (isAuthenticated && userRole && !isPublicPath) {
+    const isVendorPath = path.startsWith("/vendor/");
+    const isHMPath = path.startsWith("/hiring-manager/");
+
+    if (isVendorPath && userRole !== "IT_VENDOR") {
+      // Non-vendor tried to access vendor routes
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
+
+    if (isHMPath && userRole !== "HIRING_MANAGER") {
+      // Non-HM tried to access hiring manager routes
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
+  }
+
   return response;
 }
 
@@ -99,6 +119,7 @@ export const config = {
     "/user/:path*",
     "/vendor/:path*",
     "/business-user/:path*",
+    "/hiring-manager/:path*",
 
     // Public paths for redirect logic
     "/login",

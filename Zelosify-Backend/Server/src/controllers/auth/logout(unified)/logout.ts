@@ -61,13 +61,13 @@ export const logout = asyncHandler(
       // Clear cookies securely
       res.clearCookie("access_token", {
         httpOnly: true,
-        secure: true,
+        secure: process.env.NODE_ENV === "production",
         sameSite: "strict",
         path: "/",
       });
       res.clearCookie("refresh_token", {
         httpOnly: true,
-        secure: true,
+        secure: process.env.NODE_ENV === "production",
         sameSite: "strict",
         path: "/",
       });
