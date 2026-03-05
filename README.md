@@ -256,5 +256,4 @@ The original `extract_features` tool existed to force the LLM to structure its e
 - **HM profile history:** The HM view shows all non-deleted profiles for an opening across all upload sessions. A SHORTLISTED profile from a previous session will remain visible — this is intentional, not a bug.
 - **ACID:** All multi-step DB writes use `prisma.$transaction()`. AI recommendation writes are single atomic `update()` calls.
 - **Prompt injection defence:** 4-layer sanitization — max-length truncation, regex pattern removal, HTML escape, boundary wrapping — applied to all text extracted from resumes before sending to LLM.
-#   Z e l o s i f y - r e c r u i t - t a s k  
- 
+#
